@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %} Occupied Parking Spot Details {% endblock %}
+
+{% block heading %} 
+Occupied Parking Spot Details 
+{% endblock %}
+
+{% block content %}
+<form action="">
+    <div class="mb-3 row">
+        <label for="id" class="col-sm-3 col-form-label">Reservation ID:</label>
+        <div class="col-sm-9">
+            <input type="text" id="id" class="form-control" value="{{ reservation_id }}" readonly>
+        </div>
+    </div>
+
+    <div class="mb-3 row">
+        <label for="email" class="col-sm-3 col-form-label">Customer Email:</label>
+        <div class="col-sm-9">
+            <input type="email" id="email" class="form-control" value="{{ email }}" readonly>
+        </div>
+    </div>
+
+    <div class="mb-3 row">
+        <label for="vehicle" class="col-sm-3 col-form-label">Vehicle Number:</label>
+        <div class="col-sm-9">
+            <input type="text" id="vehicle" class="form-control" value="{{ vehicle }}" readonly>
+        </div>
+    </div>
+
+    <div class="mb-3 row">
+        <label for="time" class="col-sm-3 col-form-label">Parking Time:</label>
+        <div class="col-sm-9">
+            <input type="text" id="time" class="form-control" value="{{ time }}" readonly>
+        </div>
+    </div>
+</form>
+
+<div class="mb-3 row">
+    <a href="{{ url_for('admin.view_spot', spot_id=spot_id) }}" class="btn btn-primary w-100">Close</a>
+</div>
+{% endblock %}

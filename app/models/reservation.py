@@ -1,8 +1,13 @@
 from app import db
+from sqlalchemy.sql import func
 
 class reservation(db.Model):
     reservation_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    spot_id = db.Column(db.Integer, db.ForeignKey('parking_spot.spot_id', ondelete='RESTRICT', onupdate='CASCADE'))
-    user_email = db.Column(db.String(100), db.ForeignKey('user.email', ondelete='RESTRICT', onupdate='CASCADE'))
-    parking_time = db.Column(db.String(100), nullable=False)
-    leaving_time = db.Column(db.String(100))
+    spot_id = db.Column(db.Integer, db.ForeignKey('parking_spot.spot_id', ondelete='RESTRICT', onupdate='CASCADE'), nullable=False)
+    lot_id = db.Column(db.Integer, db.ForeignKey('parking_lot.lot_id', ondelete='RESTRICT', onupdate='CASCADE'), nullable=False)
+    user_email = db.Column(db.String(100), db.ForeignKey('user.email', ondelete='RESTRICT', onupdate='CASCADE'), nullable=False)
+    parking_time = db.Column(db.DateTime, server_default=func.now(), nullable=False)
+    leaving_time = db.Column(db.DateTime)
+    vehicle_no = db.Column(db.String(20), nullable=False)
+    status = db.Column(db.String(20), default='active')  # values: 'active', 'deleted'
+

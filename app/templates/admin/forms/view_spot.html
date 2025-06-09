@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %} Parking Spot {% endblock %}
+
+{% block heading %} 
+View/Delete Parking Spot
+{% endblock %}
+
+{% block content %}
+
+<form action="" >
+    <div class="mb-3 row">
+        <label for="id" class="col-sm-3 col-form-label"> Spot ID: </label>
+        <div class="col-sm-9">
+            <input type="text" id="id" value="{{ spot_id }}" class="form-control" readonly>
+        </div>
+    </div>
+
+    <div class="mb-3 row">
+        <label for="status" class="col-sm-3 col-form-label">Status:</label>
+    <div class="col-sm-9">
+        {% if status == 'occupied' and reservation_id %}
+            <a href="{{ url_for('admin.view_occupied_spot', reservation_id=reservation_id) }}" class="form-control text-decoration-none">
+                {{ status }}
+            </a>
+        {% else %}
+            <input type="text" id="status" class="form-control" readonly value="{{ status }}">
+        {% endif %}
+        <div id="statuslink" class="form-text">Click on the status to know more.</div> 
+    </div>
+</div>
+</form>
+
+
+
+<div class="mb-3 row">
+    <a href="{{ url_for('admin.delete_spot', spot_id=spot_id) }}" class="btn btn-primary w-100"> Delete </a>
+</div>
+<div class="mb-3 row">
+    <a href="{{ url_for( 'admin.view_lots') }}" class="btn btn-primary w-100"> Close </a>
+</div>
+
+
+{% endblock%}

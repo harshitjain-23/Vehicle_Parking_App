@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %} Admin Login {% endblock %}
+
+{% block content %} 
+
+<div class="form-box">
+    <h2><u> User Login </u></h2>
+    <form action="{{ url_for('auth.login') }}" method="POST">
+        <div class="mb-3">
+            <label for="email" class="form-label">Email:</label>
+            <input type="email" id="email" name="email" class="form-control" placeholder="Enter username">
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Password:</label>
+            <input type="password" id="password" name="password" class="form-control" placeholder="Enter password">
+        </div>
+        <input type="submit" value="Login" class="btn btn-dark w-100">
+        <div class="text-center">
+            <a href="{{ url_for('auth.login') }}" style="color: black;">Create Account?</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

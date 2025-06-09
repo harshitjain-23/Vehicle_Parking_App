@@ -7,5 +7,6 @@ class parking_lot(db.Model):
     pin_code = db.Column(db.Integer, nullable=False)
     total_spots = db.Column(db.Integer, nullable=False)
     price = db.Column(db.Integer, nullable=False)
+    status = db.Column(db.String(20), default='active')  # 'active', 'deleted'
 
-    spots = db.relationship('ParkingSpot', backref='lot')
+    spots = db.relationship('ParkingSpot', backref='lot', lazy=True)

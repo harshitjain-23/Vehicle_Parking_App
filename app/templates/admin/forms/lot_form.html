@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %} Parking Lot {% endblock %}
+
+{% block heading %} 
+
+    {% if lot_id %}
+        Edit Parking Lot
+    {% else %}
+        Add Parking Lot
+    {% endif %}
+
+{% endblock %}
+
+
+
+{% block content %}
+
+<form method="POST" 
+action="    
+    {% if lot_id %}
+        {{ url_for('admin.update_lot', lot_id=lot_id) }}
+    {% else %}
+        {{ url_for('admin.create_lot') }}
+    {% endif %}
+">
+
+    <!-- Location (editable always) -->
+    <div class="mb-3 row">
+        <label for="location" class="col-sm-3 col-form-label">Location</label>
+        <div class="col-sm-9">
+            <input type="text" class="form-control" name="location" id="location" value="{{ location or '' }}" required>
+        </div>
+    </div>
+
+    <!-- Address (readonly if updating) -->
+    <div class="mb-3 row">
+        <label for="address" class="col-sm-3 col-form-label">Address</label>
+        <div class="col-sm-9">
+            <input type="text" class="form-control" name="address" id="address" value="{{ address or '' }}" {% if lot_id %}readonly{% endif %} required>
+        </div>
+    </div>
+
+    <!-- Pincode (readonly if updating) -->
+    <div class="mb-3 row">
+        <label for="pincode" class="col-sm-3 col-form-label">Pincode</label>
+        <div class="col-sm-9">
+            <input type="number" class="form-control" name="pincode" id="pincode" value="{{ pincode or '' }}" {% if lot_id %}readonly{% endif %} required>
+        </div>
+    </div>
+
+    <!-- Total Spots (readonly if updating) -->
+    <div class="mb-3 row">
+        <label for="totalspots" class="col-sm-3 col-form-label">Total Spots</label>
+        <div class="col-sm-9">
+            <input type="number" class="form-control" name="totalspots" id="totalspots" value="{{ totalspots or '' }}" {% if lot_id %}readonly{% endif %} required>
+        </div>
+    </div>
+
+
+    <!-- Price (editable always) -->
+    <div class="mb-3 row">
+        <label for="price" class="col-sm-3 col-form-label">Price</label>
+        <div class="col-sm-9">
+            <input type="number" class="form-control" name="price" id="price" value="{{ price or '' }}" required>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary w-100">{{ 'Update Lot' if lot_id else 'Add Lot' }}</button>
+</form>
+
+<div class="mb-3 row">
+    <a href="{{ url_for( 'admin.view_lots') }}" class="btn btn-primary w-100"></a>
+</div>
+
+
+{% endblock%}
