@@ -11,14 +11,14 @@
 </head>
 <body>
 
-    <!-- Navigation Bar -->
+  <!-- Navigation Bar -->
 <nav class="navbar navbar-expand-lg navbar-dark mb-5 rounded-pill" style="background-color: #96ceb4; margin: 5px 5px 5px 5px ;">
   <div class='container-fluid' style="padding: 10px 80px 10px 80px;">
     <span class="navbar-brand text-danger"> Welcome <b>Admin!</b></span>
 
     <div class="collapse navbar-collapse justify-content-center">
       <ul class="navbar-nav">
-        <li class="nav-item"><a class="nav-link text-black" href="{{ url_for('admin.dashboard') }}">Home</a></li>
+        <li class="nav-item"><a class="nav-link text-black" href="{{ url_for('admin.view_lots') }}">Home</a></li>
         <li class="nav-item"><a class="nav-link text-black" href="{{ url_for('admin.view_users') }}">Users</a></li>
         <li class="nav-item"><a class="nav-link text-black" href="{{ url_for('admin.search') }}">Search</a></li>
         <li class="nav-item"><a class="nav-link text-black" href="{{ url_for('admin.summary') }}">Summary</a></li>
@@ -30,7 +30,7 @@
   </div>
 </nav>
 
-    <!-- #588c7e In color combination required -->
+    <!-- #588c7e If color combination required -->
     <!-- Heading box --> 
     <div class="container col-lg-10 mb-3 border rounded-5 shadow-sm p-3 bg-light">
         <h3 class="text-center">{% block heading %} {% endblock%}</h3>
