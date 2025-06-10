@@ -1,7 +1,8 @@
 from flask import Blueprint, redirect, render_template, request, flash, session, url_for
 from app import db
 from app.models import parking_lot, parking_spot, reservation, client
-from functools import wraps
+from functools import wraps 
+# wraps used for decorator in user authentication
 
 admin_bp = Blueprint('admin', __name__)
 
@@ -22,7 +23,6 @@ def view_lots():
 
     lots = parking_lot.query.filter_by(status='active').all()
     return render_template('admin/view_lots.html', lots=lots)
-## need to fetch all spots details with their correspondig lots by running a for loop and then passing lots and spots in a key value pair passes to render_template
 
 
 
