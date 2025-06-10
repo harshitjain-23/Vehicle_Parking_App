@@ -169,14 +169,34 @@ def occupied_spot(reservation_id):
 
 
 # view all users
-@admin_bp.route('/view-users')
+@admin_bp.route('/view-users', methods=["POST", "GET"])
 @admin_required
 def view_users():
 
+    if request.method == "POST":
+        data = request.form.get('search_for')
 
-    users = client.query.all()
+        if data:
+            search_for = f"%{data}%"
+            users = client.query.filter(
+                db.or_(
+                    client.name.ilike(search_for),
+                    client.email.ilike(search_for),
+                    client.address.ilike(search_for),
+                    client.pincode.ilike(search_for)
+                )
+            ).all()
+        else:
+            flash("Please enter a keyword to search.", "warning")
+            users = client.query.all()
+            return render_template('admin/view_users.html', users=users)
+        
+    else:
+        users = client.query.all()
     return render_template('admin/view_users.html', users=users)
 
+
+# searching into the database
 
 
 # temprary summary dashboard

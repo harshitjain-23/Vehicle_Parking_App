@@ -3,6 +3,16 @@
 {% block content %} 
 
 <div class="container col-lg-10 mb-4 border border-primary rounded-4 shadow-sm p-3 bg-light">
+
+<form action="{{ url_for('admin.view_users') }}" method="POST" class="d-flex justify-content-center align-items-center" role="search">
+    <div class="input-group w-auto">
+        <input type="text" id="searchbox" name="search_for" class="form-control text-center border-primary" placeholder="Search here" required>
+        <button type="submit" class="btn btn-outline-primary" aria-label="Search">
+            <i class="bi bi-search"></i>
+        </button>
+    </div>
+</form>
+
 <table class="table table-striped table-borderless align-middle table-hover">
     <thead>
         <th scope="col">Serial Number</th> 

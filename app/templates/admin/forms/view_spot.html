@@ -7,7 +7,7 @@ View/Delete Parking Spot
 
 {% block content %}
 
-<form action="" >
+<form action="{{ url_for('admin.view_spot') }}" >
     <div class="mb-3 row">
         <label for="id" class="col-sm-3 col-form-label"> Spot ID: </label>
         <div class="col-sm-9">
@@ -28,6 +28,12 @@ View/Delete Parking Spot
         <div id="statuslink" class="form-text">Click on the status to know more.</div> 
     </div>
 </div>
+
+<div class="container-fluid">
+       <a href="{{ url_for('admin.delete_spot', spot_id=spot_id) }}" class="btn rounded-1" style="background-color: #d5f4e6; border: 2px solid #2d6a70; color: black; margin-right: 35px;"> Delete </a>
+        <a href="{{ url_for( 'admin.view_lots') }}" class="btn  rounded-1" style="background-color: #d5f4e6; border: 2px solid#2d6a70; color: black"> Close </a>
+</div> 
+
 </form>
 
 {% endblock%}
