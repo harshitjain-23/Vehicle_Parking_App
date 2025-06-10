@@ -11,3 +11,7 @@ class reservation(db.Model):
     vehicle_no = db.Column(db.String(20), nullable=False)
     status = db.Column(db.String(20), default='active')  # values: 'active', 'deleted'
 
+    # This line is for reverse access ( backref = back reference to parent table )
+    lot = db.relationship('parking_lot', backref='reservations')
+    spot = db.relationship('parking_spot', backref='reservations')
+    client = db.relationship('client', backref='reservations')

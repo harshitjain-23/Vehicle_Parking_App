@@ -9,4 +9,5 @@ class parking_lot(db.Model):
     price = db.Column(db.Integer, nullable=False)
     status = db.Column(db.String(20), default='active')  # 'active', 'deleted'
 
+    # This line is for reverse access ( backref = back reference to parent table )
     spots = db.relationship('ParkingSpot', backref='lot', lazy=True)

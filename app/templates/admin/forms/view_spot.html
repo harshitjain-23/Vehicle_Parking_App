@@ -30,14 +30,4 @@ View/Delete Parking Spot
 </div>
 </form>
 
-
-
-<div class="mb-3 row">
-    <a href="{{ url_for('admin.delete_spot', spot_id=spot_id) }}" class="btn btn-primary w-100"> Delete </a>
-</div>
-<div class="mb-3 row">
-    <a href="{{ url_for( 'admin.view_lots') }}" class="btn btn-primary w-100"> Close </a>
-</div>
-
-
 {% endblock%}

@@ -1,0 +1,70 @@
+{% block title %} ParkingLot{%endblock%}
+{% block heading %} Parking Lot{%endblock%}
+{% block content %} 
+
+
+<!-- Top Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-success mb-4">
+  <div class="container-fluid">
+    <span class="navbar-brand">Welcome to Admin</span>
+
+    <div class="collapse navbar-collapse justify-content-center">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link text-white" href="{{ url_for('admin.dashboard') }}">Home</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="{{ url_for('admin.view_users') }}">Users</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="{{ url_for('admin.search') }}">Search</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="{{ url_for('admin.summary') }}">Summary</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="{{ url_for('auth.logout') }}">Logout</a></li>
+      </ul>
+    </div>
+
+    <a class="btn btn-outline-light" href="{{ url_for('admin.edit_profile') }}">Edit Profile</a>
+  </div>
+</nav>
+
+<!-- Main Section - Parking Lots Overview -->
+<div class="container">
+  <div class="row">
+    {% for lot in parking_lots %}
+    <div class="col-md-6 mb-4">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <strong>Parking#{{ loop.index }}</strong>
+          <div>
+            <a href="{{ url_for('admin.update_lot', lot_id=lot.lot_id) }}" class="btn btn-sm btn-outline-primary">Edit</a>
+            <a href="{{ url_for('admin.delete_lot', lot_id=lot.lot_id) }}" class="btn btn-sm btn-outline-danger">Delete</a>
+          </div>
+        </div>
+        <div class="card-body">
+          <p>Occupied: {{ lot.occupied_spots }}/{{ lot.total_spots }}</p>
+          <div class="d-flex flex-wrap">
+            {% for spot in lot.spots %}
+            <a href="{{ url_for('admin.view_spot', spot_id=spot.spot_id) }}" 
+               class="btn m-1 {% if spot.status == 'occupied' %}btn-danger{% else %}btn-success{% endif %}" 
+               style="width: 40px; height: 40px;">
+              {{ 'O' if spot.status == 'occupied' else 'A' }}
+            </a>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- Add Lot Button -->
+  <div class="text-center">
+    <a href="{{ url_for('admin.create_lot') }}" class="btn btn-outline-primary btn-lg">+ Add Lot</a>
+  </div>
+
+  <!-- Color Legend -->
+  <div class="mt-4">
+    <strong>Legend:</strong>
+    <span class="badge bg-success">A - Available</span>
+    <span class="badge bg-danger">O - Occupied</span>
+  </div>
+</div>
+
+
+
+{%endblock%}

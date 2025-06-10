@@ -6,5 +6,5 @@ class parking_spot(db.Model):
     status = db.Column(db.String(20), nullable=False)
     is_active = db.Column(db.Boolean, default=True)  # True = exists, False = soft-deleted
 
-
+    # This line is for reverse access ( backref = back reference to parent table )
     reservations = db.relationship('Reservation', backref='spot', lazy=True)
