@@ -1,5 +1,6 @@
 {% extends 'client/base.html' %}
 {% block title %}Book Spot{% endblock %}
+{% block back %} {{ url_for('client.locations') }}{%endblock%}
 {% block heading %}Booking Form{% endblock %}
 {% block content %}
 <div class="container col-lg-8 mb-4 border border-info rounded-4 shadow-sm p-4 bg-light">
@@ -16,7 +17,7 @@
             </div>
             <div class="col-md-4">
                 <label class="form-label text-secondary">Spot ID</label>
-                <input type="text" class="form-control border-primary text-center" value="{{ spot_id }}" readonly>
+                <input type="text" class="form-control border-primary text-center" value="{{ spot_id.spot_id }}" readonly>
             </div>
         </div>
 

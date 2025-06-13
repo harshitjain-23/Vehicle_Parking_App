@@ -1,5 +1,6 @@
 {% extends "client/base.html" %}
 {% block title %} My Reservations {% endblock %}
+{% block back %} {{ url_for('client.dashboard') }}{%endblock%}
 {% block heading %} Reservation History {% endblock %}
 {% block content %}
 
@@ -28,7 +29,7 @@
                 <td>{{ res.vehicle_no }}</td>
                 <td>{{ res.parking_time.strftime('%d-%m-%Y %I:%M %p') }}</td>
                 <td>
-                    <a href="{{ url_for('client.release', res_id=res.reservation_id) }}" class="btn btn-outline-danger btn-sm">Release</a>
+                    <a href="{{ url_for('client.release', reservation_id=res.reservation_id) }}" class="btn btn-outline-danger btn-sm">Release</a>
                 </td>
             </tr>
             {% else %}

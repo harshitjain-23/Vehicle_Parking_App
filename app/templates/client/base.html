@@ -75,7 +75,7 @@
     <div class="client-nav">
         <img src="{{ url_for('static', filename='images/temp_img.png') }}" alt="Logo" class="client-logo">
         <h3><b><u>{% block heading %}Page Title{% endblock %}</u></b></h3>
-        <a href="{{ request.referrer or url_for('client.dashboard') }}" class="back-button">
+        <a href="{% block back %} url_for('client.dashboard') {%endblock%}" class="back-button">
             <i class="bi bi-arrow-left"></i> Back
         </a>
     </div>

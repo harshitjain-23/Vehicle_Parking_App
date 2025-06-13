@@ -20,4 +20,8 @@ class parking_lot(db.Model):
     @property
     def occupied_spots(self):
         return len([spot for spot in self.spots if spot.is_active and spot.status == 'occupied'])
+    
+    @property
+    def available_spots(self):
+        return len([spot for spot in self.spots if spot.is_active and spot.status != 'occupied'])
 

@@ -22,10 +22,12 @@ def user_authentication(f):
 
 
 # client dashboard
-@client_bp.route('/')
+@client_bp.route('/Home')
 @user_authentication
 def dashboard():
-    return render_template('templates/client/dashboard.html')
+    email = session.get('user')
+    user = client.query.filter_by(email=email).first()
+    return render_template('client/dashboard.html', name = user.name)
 
 
 @client_bp.route('/user-profile')
@@ -57,7 +59,7 @@ def update_profile():
         flash('Profile successfully updated', 'success')
         return redirect(url_for('client.profile'))
     
-    return render_template('client/update_profile.html', user)
+    return render_template('client/update_profile.html', user=data)
 
 
 @client_bp.route('/locations', methods=['POST', 'GET'])
@@ -104,10 +106,10 @@ def booking(lot_id):
 
         if existing:
             flash("Same vehicle can't be parked at more than one spot at the time", 'warning')
-            return render_template('client/booking.html', lot_id = lot_id, user_email=user_email, spot_id=vacant_spot.spot_id)
+            return render_template('client/booking.html', lot_id = lot_id, user_email=user_email, spot_id=vacant_spot)
         
         else:
-            reserve = reservation(lot_id=lot_id, vehicle_no=vehicle_no, spot_id=vacant_spot.spot_id, user_email=user_email)
+            reserve = reservation(lot_id=lot_id, parking_time = datetime.now(), vehicle_no=vehicle_no, spot_id=vacant_spot.spot_id, user_email=user_email)
             vacant_spot.status = 'occupied'
 
             db.session.add(reserve)
@@ -116,7 +118,7 @@ def booking(lot_id):
             flash("Spot successfully booked!", "success")
             return redirect(url_for('client.reservations'))
             
-    return render_template('client/booking.html', user_email=user_email, spot_id=vacant_spot, lot_id=lot.lot_id,location=lot.location, address=lot.address, pincode=lot.pincode, price=lot.price )
+    return render_template('client/booking.html', user_email=user_email, spot_id=vacant_spot, lot_id=lot.lot_id,location=lot.location, address=lot.address, pincode=lot.pin_code, price=lot.price )
 
 
 

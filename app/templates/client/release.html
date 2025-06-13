@@ -1,17 +1,18 @@
 {% extends 'client/base.html' %}
 {% block title %}Release Spot{% endblock %}
+{% block back %} {{ url_for('client.reservations') }}{%endblock%}
 {% block heading %}Release Parking{% endblock %}
 {% block content %}
 <div class="container col-lg-8 mb-4 border border-danger rounded-4 shadow-sm p-4 bg-light">
     <h5 class="text-center text-danger mb-3"><u>Confirm Release</u></h5>
     <table class="table table-bordered">
-        <tr><th>Reservation ID</th><td>{{ reservation.reservation_id }}</td></tr>
-        <tr><th>Lot ID</th><td>{{ reservation.lot_id }}</td></tr>
-        <tr><th>Spot ID</th><td>{{ reservation.spot_id }}</td></tr>
-        <tr><th>Vehicle No</th><td>{{ reservation.vehicle_no }}</td></tr>
-        <tr><th>Parking Time</th><td>{{ reservation.parking_time.strftime('%d-%m-%Y %I:%M %p') }}</td></tr>
-        <tr><th>Leaving Time</th><td>{{ current_time.strftime('%d-%m-%Y %I:%M %p') }}</td></tr>
-        <tr><th>Total Cost</th><td>&#8377; {{ reservation.total_cost }}</td></tr>
+        <tr><th>Reservation ID</th><td>{{ reservation_id }}</td></tr>
+        <tr><th>Lot ID</th><td>{{ lot_id }}</td></tr>
+        <tr><th>Spot ID</th><td>{{ spot_id }}</td></tr>
+        <tr><th>Vehicle No</th><td>{{ vehicle_no }}</td></tr>
+        <tr><th>Parking Time</th><td>{{ parking_time.strftime('%d-%m-%Y %I:%M %p') }}</td></tr>
+        <tr><th>Leaving Time</th><td>{{ leaving_time.strftime('%d-%m-%Y %I:%M %p') }}</td></tr>
+        <tr><th>Total Cost</th><td>&#8377; {{ total_cost }}</td></tr>
     </table>
     <form method="POST">
         <div class="text-center mt-3">
