@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block title %} My Reservations {% endblock %}
+{% block heading %} Reservation History {% endblock %}
+{% block content %}
+
+<!-- reservations.html -->
+<div class="container col-lg-10 mb-4 border border-success rounded-4 shadow-sm p-4 bg-light">
+
+    <!-- Active Reservations Table -->
+    <h5 class="mb-3 text-success"><u>Current Reservations</u></h5>
+    <table class="table table-striped table-hover">
+        <thead class="table-success">
+            <tr>
+                <th>Reservation ID</th>
+                <th>Lot ID</th>
+                <th>Spot ID</th>
+                <th>Vehicle No</th>
+                <th>Parking Time</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for res in new %}
+            <tr>
+                <td>{{ res.reservation_id }}</td>
+                <td>{{ res.lot_id }}</td>
+                <td>{{ res.spot_id }}</td>
+                <td>{{ res.vehicle_no }}</td>
+                <td>{{ res.parking_time.strftime('%d-%m-%Y %I:%M %p') }}</td>
+                <td>
+                    <a href="{{ url_for('client.release', res_id=res.reservation_id) }}" class="btn btn-outline-danger btn-sm">Release</a>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="6" class="text-center text-muted">No current reservations.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Past Reservations Table -->
+    <h5 class="mt-5 mb-3 text-muted"><u>Past Reservations</u></h5>
+    <table class="table table-striped table-hover">
+        <thead class="table-secondary">
+            <tr>
+                <th>Reservation ID</th>
+                <th>Lot ID</th>
+                <th>Spot ID</th>
+                <th>Vehicle No</th>
+                <th>Parking Time</th>
+                <th>Parked Out At</th>
+                <th>Total Cost</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for res in old %}
+            <tr>
+                <td>{{ res.reservation_id }}</td>
+                <td>{{ res.lot_id }}</td>
+                <td>{{ res.spot_id }}</td>
+                <td>{{ res.vehicle_no }}</td>
+                <td>{{ res.parking_time.strftime('%d-%m-%Y %I:%M %p') }}</td>
+                <td>{{ res.leaving_time.strftime('%d-%m-%Y %I:%M %p') }}</td>
+                <td class="text-end">&#8377;{{ res.total_cost }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="7" class="text-center text-muted">No past reservations found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+
+
+{% endblock %}

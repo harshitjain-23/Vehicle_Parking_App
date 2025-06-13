@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %} Parking Locations {% endblock %}
+{% block heading %} Active Parking Lots {% endblock %}
+{% block content %}
+
+<div class="container col-lg-10 mb-4 border border-success rounded-4 shadow-sm p-3 bg-light">
+
+<form action="{{ url_for('client.locations') }}" method="POST" class="d-flex justify-content-center align-items-center" role="search">
+    <div class="input-group w-auto">
+        <input type="text" id="searchbox" name="search_for" class="form-control text-center border-success" placeholder="Search by location or pincode" required>
+        <button type="submit" class="btn btn-outline-success" aria-label="Search">
+            <i class="bi bi-search"></i>
+        </button>
+    </div>
+</form>
+
+<table class="table table-striped table-borderless align-middle table-hover mt-3">
+    <thead>
+        <tr>
+            <th scope="col">Lot ID</th>
+            <th scope="col">Location</th>
+            <th scope="col">Address</th>
+            <th scope="col">Pincode</th>
+            <th scope="col">Available Spots</th>
+            <th scope="col">Price/hr</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for lot in data %}
+        <tr>
+            <th scope="row">{{ lot.lot_id }}</th>
+            <td>{{ lot.location }}</td>
+            <td>{{ lot.address }}</td>
+            <td>{{ lot.pin_code }}</td>
+            <td>{{ lot.available_spots }}</td>
+            <td>₹{{ lot.price }}</td>
+            <td>
+                {% if lot.available_spots > 0 %}
+                    <a href="{{ url_for('client.booking', lot_id=lot.lot_id) }}" class="btn btn-outline-primary btn-sm">Book</a>
+                {% else %}
+                    <span class="text-danger">Unavailable</span>
+                {% endif %}
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="7" class="text-center text-muted">No active lots found.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+</div>
+
+{% endblock %}

@@ -66,11 +66,11 @@ action="
 
     
     <div class="container-fluid">
-        <a href="{% if lot_id %} {{ url_for('admin.update_lot', lot_id=lot_id) }} {% else %} {{ url_for('admin.create_lot') }} {% endif %}" class="btn rounded-1" style="background-color: #d5f4e6; border: 2px solid #2d6a70; color: black; margin-right: 35px;"> {{ 'Update Lot' if lot_id else 'Add Lot' }} </a>
+        <button type="submit" class="btn rounded-1" style="background-color: #d5f4e6; border: 2px solid #2d6a70; color: black; margin-right: 35px;"> {{ 'Update Lot' if lot_id else 'Add Lot' }} </button>
         <a href="{{ url_for( 'admin.view_lots') }}" class="btn  rounded-1" style="background-color: #d5f4e6; border: 2px solid#2d6a70; color: black"> Close </a>
     </div> 
 
-</form
+</form>
 
 
 {% endblock%}

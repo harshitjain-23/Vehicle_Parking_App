@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Update Profile{% endblock %}
+{% block heading %} Update Your Profile {% endblock %}
+{% block content %}
+<div class="container col-lg-8 mb-4 border border-secondary rounded-4 shadow-sm p-4 bg-light">
+    <form action="{{ url_for('client.update_profile') }}" method="POST">
+        <div class="row mb-3">
+            <label class="col-sm-4 col-form-label text-secondary">Email</label>
+            <div class="col-sm-8">
+                <input type="email" class="form-control border-primary text-center" value="{{ user.email }}" readonly>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label class="col-sm-4 col-form-label text-secondary">Full Name</label>
+            <div class="col-sm-8">
+                <input type="text" name="name" class="form-control border-primary text-center" value="{{ user.name }}" required>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label class="col-sm-4 col-form-label text-secondary">Address</label>
+            <div class="col-sm-8">
+                <input type="text" name="address" class="form-control border-primary text-center" value="{{ user.address }}" required>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label class="col-sm-4 col-form-label text-secondary">Pin Code</label>
+            <div class="col-sm-8">
+                <input type="text" name="pincode" class="form-control border-primary text-center" value="{{ user.pin_code }}" required>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label class="col-sm-4 col-form-label text-secondary">Password</label>
+            <div class="col-sm-8">
+                <input type="text" name="password" class="form-control border-primary text-center" value="{{ user.password }}" required>
+            </div>
+        </div>
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-outline-success rounded-pill">Save Changes</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+
+<!-- user email readonly option needed -->
+<!-- need an update password button -->

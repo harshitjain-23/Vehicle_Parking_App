@@ -7,7 +7,7 @@ Occupied Parking Spot Details
 
 {% block content %}
 
-<form action="{{ url_for('view_occupied_spot', reservation_id=reservation_id) }}">
+<form action="{{ url_for('view_occupied_spot', reservation_id=reservation_id) }}" method="GET">
     <div class="mb-3 row">
         <label for="id" class="col-sm-4 col-form-label">Reservation ID:</label>
         <div class="col-sm-8">

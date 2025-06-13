@@ -33,7 +33,7 @@ def dashboard():
 def profile():
     email = session.get('user')
     data = client.query.get(email)
-    return render_template('client/profile.html', data=data)
+    return render_template('client/profile.html', user=data)
 
 
 @client_bp.route('/update-profile', methods=['POST', 'GET'])
@@ -57,7 +57,7 @@ def update_profile():
         flash('Profile successfully updated', 'success')
         return redirect(url_for('client.profile'))
     
-    return render_template('client/update_profile.html', data)
+    return render_template('client/update_profile.html', user)
 
 
 @client_bp.route('/locations', methods=['POST', 'GET'])
