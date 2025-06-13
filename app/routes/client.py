@@ -25,7 +25,7 @@ def user_authentication(f):
 @client_bp.route('/')
 @user_authentication
 def dashboard():
-    return render_template('client/dashboard.html')
+    return render_template('templates/client/dashboard.html')
 
 
 @client_bp.route('/user-profile')

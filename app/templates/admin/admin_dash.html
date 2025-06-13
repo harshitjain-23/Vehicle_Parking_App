@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "admin/base.html" %}
 {% block title %} ParkingLot{%endblock%}
 {% block heading %} Parking Lot{%endblock%}
 {% block content %} 
@@ -7,7 +7,7 @@
 <!-- Main Section - Parking Lots Overview -->
 <div class="container">
   <div class="row">
-    {% for lot in parking_lots %}
+    {% for lot in lots %}
     <div class="col-md-6 mb-4">
       <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
@@ -18,16 +18,18 @@
           </div>
         </div>
         <div class="card-body">
-          <p>Occupied: {{ lot.occupied_spots }}/{{ lot.total_spots }}</p>
-          <div class="d-flex flex-wrap">
-            {% for spot in lot.spots %}
-            <a href="{{ url_for('admin.view_spot', spot_id=spot.spot_id) }}" 
-               class="btn m-1 {% if spot.status == 'occupied' %}btn-danger{% else %}btn-success{% endif %}" 
-               style="width: 40px; height: 40px;">
-              {{ 'O' if spot.status == 'occupied' else 'A' }}
-            </a>
-            {% endfor %}
-          </div>
+          <p>Occupied: {{ lot.occupied_spots }}/{{ lot.total_no_spots }}</p>
+          <div class="row">
+                  {% for spot in lot.spots if spot.is_active %}
+                    <div class="col-2 mb-2">
+                      <a href="{{ url_for('admin.view_spot', spot_id=spot.spot_id) }}" 
+                        class="btn {% if spot.status == 'occupied' %}btn-danger{% else %}btn-success{% endif %} w-100" style="height: 40px;">
+                        {{ 'O' if spot.status == 'occupied' else 'A' }}
+                      </a>
+                    </div>
+                  {% endfor %}
+                </div>
+
         </div>
       </div>
     </div>
@@ -40,7 +42,7 @@
   </div>
 
   <!-- Color Legend -->
-  <div class="mt-4 d-flex justify-content-start align-items-center gap-2">
+  <div class="mt-4 d-flex justify-content-center align-items-center gap-2">
   <strong>Legend:</strong>
   <span class="badge bg-success">A - Available</span>
   <span class="badge bg-danger">O - Occupied</span>

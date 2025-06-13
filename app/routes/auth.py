@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, redirect, request, url_for, flash, session
 from app import db
-from app.models import client, superuser
+from app.models.client import client
+from app.models.superuser import superuser
 
 auth_bp = Blueprint('auth', __name__)
 
@@ -9,12 +10,12 @@ auth_bp = Blueprint('auth', __name__)
 @auth_bp.route('/', methods=["POST", "GET"])
 def login():
     if request.method == "POST":
-        username = request.form.get('username')
+        username = request.form.get('email')
         password = request.form.get('password')
 
         data = client.query.filter_by(email=username).first()
 
-        if username == data.username and password == data.password:
+        if data and username == data.email and password == data.password:
             session['user'] = username
             flash('Login successfull', 'success')
             return redirect(url_for("client.dashboard"))
@@ -34,10 +35,10 @@ def adminlogin():
 
         data = superuser.query.filter_by(username=username).first()
 
-        if username == data.username and password == data.password:
+        if data and username == data.username and password == data.password:
             session['admin'] = username
             flash('Login successfull', 'success')
-            return redirect(url_for("admin"))
+            return redirect(url_for("admin.view_lots"))
         else:
             flash('Invalid credentials', 'danger')
             return redirect(url_for("auth.adminlogin"))

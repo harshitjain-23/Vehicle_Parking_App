@@ -2,6 +2,7 @@ from app import db
 from sqlalchemy.sql import func
 
 class reservation(db.Model):
+    __tablename__ = 'reservation'
     reservation_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     spot_id = db.Column(db.Integer, db.ForeignKey('parking_spot.spot_id', ondelete='RESTRICT', onupdate='CASCADE'), nullable=False)
     lot_id = db.Column(db.Integer, db.ForeignKey('parking_lot.lot_id', ondelete='RESTRICT', onupdate='CASCADE'), nullable=False)

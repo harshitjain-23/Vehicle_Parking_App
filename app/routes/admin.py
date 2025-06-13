@@ -18,12 +18,12 @@ def admin_required(f):
     
 
 # code to view all available parking lots locations
-@admin_bp.route('/')
+@admin_bp.route('/home')
 @admin_required
 def view_lots():
 
     lots = parking_lot.query.filter_by(status='active').all()
-    return render_template('admin/view_lots.html', lots=lots)
+    return render_template('admin/admin_dash.html', lots=lots)
 
 
 
@@ -82,7 +82,7 @@ def update_lot(lot_id):
         db.session.commit()
         flash("Lot updated successfully", "success")
 
-        return redirect(url_for('admin.update_lot', lot_id=lot_id))
+        return redirect(url_for('admin.view_lots'))
 
     # If from GET method, render form with existing values
     return render_template( 'admin/forms/lot_form.html', lot_id=data.lot_id, location=data.location, address=data.address, pincode=data.pin_code, totalspots=data.total_spots, price=data.price)
