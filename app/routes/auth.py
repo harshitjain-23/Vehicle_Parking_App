@@ -12,17 +12,17 @@ def login():
         username = request.form.get('username')
         password = request.form.get('password')
 
-        data = client.query.filter_by(username=username).first()
+        data = client.query.filter_by(email=username).first()
 
         if username == data.username and password == data.password:
             session['user'] = username
             flash('Login successfull', 'success')
-            return redirect(url_for("client"))
+            return redirect(url_for("client.dashboard"))
         else:
             flash('Invalid credentials', 'danger')
-            return redirect(url_for("login.html"))
+            return redirect(url_for("auth.login"))
         
-    return render_template("/login/login.html")    
+    return render_template("login/login.html")    
     
 
 # Admin Login
@@ -40,9 +40,9 @@ def adminlogin():
             return redirect(url_for("admin"))
         else:
             flash('Invalid credentials', 'danger')
-            return redirect(url_for("adminlogin.html"))
+            return redirect(url_for("auth.adminlogin"))
         
-    return render_template("/login/adminlogin.html") 
+    return render_template("login/adminlogin.html") 
 
 
 # Client logout 
@@ -71,7 +71,7 @@ def signup():
         pincode = request.form.get('pincode')
         password = request.form.get('password')
 
-        existing_user = client.query.filer_by(email=email).first()
+        existing_user = client.query.filter_by(email=email).first()
 
         if existing_user:
             flash('User already exits please login.', 'warning')
@@ -84,5 +84,5 @@ def signup():
         flash('Signup successful! Please log in.', 'success')
         return redirect(url_for('auth.login'))
 
-    return render_template('/login/signup.html')
+    return render_template('login/signup.html')
         

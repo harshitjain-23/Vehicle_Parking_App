@@ -33,18 +33,19 @@ def dashboard():
 def profile():
     email = session.get('user')
     data = client.query.get(email)
-    return render_template('client/profile.html', data)
+    return render_template('client/profile.html', data=data)
 
 
 @client_bp.route('/update-profile', methods=['POST', 'GET'])
 @user_authentication
 def update_profile():
     email = session.get('user')
-    data = client.query.get(email)
 
     if not email:
         flash("user not found.", "danger")
-        redirect(url_for('client.dashboard'))
+        return redirect(url_for('client.dashboard'))
+
+    data = client.query.get(email)
 
     if request.method == 'POST':
         data.name = request.form.get('name')
@@ -89,7 +90,7 @@ def locations():
 def booking(lot_id):
 
     # false status means not occupies and is_active means spot is not deleted 
-    vacant_spot = parking_spot.query.filter_by(lot_id=lot_id, status=False, is_active=True).first()
+    vacant_spot = parking_spot.query.filter_by(lot_id=lot_id, status='available', is_active=True).first()
     user_email = session.get('user')
     lot = parking_lot.query.get(lot_id)
 
@@ -102,7 +103,7 @@ def booking(lot_id):
         existing = reservation.query.filter_by(vehicle_no = vehicle_no, status='active').all()
 
         if existing:
-            flash("Same vehicle can't be parked at more than one spot at the time")
+            flash("Same vehicle can't be parked at more than one spot at the time", 'warning')
             return render_template('client/booking.html', lot_id = lot_id, user_email=user_email, spot_id=vacant_spot.spot_id)
         
         else:

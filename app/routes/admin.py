@@ -45,6 +45,7 @@ def create_lot():
             new_lot = parking_lot( location=location, address=address, pin_code=pincode, total_spots=totalspots, price=price)
 
             db.session.add(new_lot)
+            db.session.commit()
 
             for _ in range(int(totalspots)):
                 new_spot = parking_spot(lot_id=new_lot.lot_id, status='available')
@@ -124,7 +125,7 @@ def view_spot(spot_id):
         if res:
             reservation_id = res.reservation_id
 
-    return render_template( 'view_spot.html', spot_id=data.spot_id, status=data.status, reservation_id=reservation_id )
+    return render_template( 'admin/forms/view_spot.html', spot_id=data.spot_id, status=data.status, reservation_id=reservation_id )
 
 
 
@@ -162,10 +163,10 @@ def occupied_spot(reservation_id):
     data = reservation.query.get(reservation_id)
 
     if data:
-        return render_template('occupied_spot.html', reservation_id=data.reservation_id, email=data.user_email, vehicle=data.vehicle_no, time=data.parking_time, spot_id=data.spot_id, price=data.lot.price)
-        # stpt_id is needed for Close button to get back to view_spot from child table which is revervation
+        return render_template('admin/forms/occupied_spot.html', reservation_id=data.reservation_id, email=data.user_email, vehicle=data.vehicle_no, time=data.parking_time, spot_id=data.spot_id, price=data.lot.price)
+        # stot_id is needed for Close button to get back to view_spot from child table which is revervation
     flash("Reservation not found", "danger")
-    return redirect(url_for('admin.view_spot'))
+    return redirect(url_for('admin.view_spot', spot_id = data.spot_id))
 
 
 
