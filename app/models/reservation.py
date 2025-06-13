@@ -9,6 +9,7 @@ class reservation(db.Model):
     parking_time = db.Column(db.DateTime, server_default=func.now(), nullable=False)
     leaving_time = db.Column(db.DateTime)
     vehicle_no = db.Column(db.String(20), nullable=False)
+    total_cost = db.Column(db.Integer)
     status = db.Column(db.String(20), default='active')  # values: 'active', 'deleted'
 
     # This line is for reverse access ( backref = back reference to parent table )

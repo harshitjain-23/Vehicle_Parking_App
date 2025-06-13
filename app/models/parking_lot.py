@@ -11,3 +11,11 @@ class parking_lot(db.Model):
 
     # This line is for reverse access ( backref = back reference to parent table )
     spots = db.relationship('ParkingSpot', backref='lot', lazy=True)
+
+    @property
+    def occupied_spots(self):
+        return sum(1 for spot in self.spots if spot.status == 'occupied' and spot.is_active)
+
+    @property
+    def available_spots(self):
+        return sum(1 for spot in self.spots if spot.status != 'occupied' and spot.is_active)

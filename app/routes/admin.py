@@ -3,6 +3,7 @@ from app import db
 from app.models import parking_lot, parking_spot, reservation, client
 from functools import wraps 
 # wraps used for decorator in user authentication
+from sqlalchemy import or_, cast, String
 
 admin_bp = Blueprint('admin', __name__)
 
@@ -179,11 +180,11 @@ def view_users():
         if data:
             search_for = f"%{data}%"
             users = client.query.filter(
-                db.or_(
-                    client.name.ilike(search_for),
-                    client.email.ilike(search_for),
-                    client.address.ilike(search_for),
-                    client.pincode.ilike(search_for)
+                or_(
+                        client.name.ilike(search_for),
+                        client.email.ilike(search_for),
+                        client.address.ilike(search_for),
+                        cast(client.pincode, String).ilike(search_for)
                 )
             ).all()
         else:
@@ -195,8 +196,6 @@ def view_users():
         users = client.query.all()
     return render_template('admin/view_users.html', users=users)
 
-
-# searching into the database
 
 
 # temprary summary dashboard
