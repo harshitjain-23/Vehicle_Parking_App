@@ -8,22 +8,22 @@ View/Delete Parking Spot
 {% block content %}
 
 <form action="{{ url_for('admin.view_spot', spot_id=spot_id) }}">
-    <div class="mb-3 row">
-        <label for="id" class="col-sm-3 col-form-label"> Spot ID: </label>
-        <div class="col-sm-9">
-            <input type="text" id="id" value="{{ spot_id }}" class="form-control" readonly>
+    <div class="mb-4 row">
+        <label for="id" class="col-sm-4 col-form-label"> Spot ID: </label>
+        <div class="col-sm-7">
+            <input type="text" id="id" value="{{ spot_id }}" class="form-control text-center border border-dark-subtle" readonly>
         </div>
     </div>
 
-    <div class="mb-3 row">
-        <label for="status" class="col-sm-3 col-form-label">Status:</label>
-    <div class="col-sm-9">
+    <div class="mb-4 row">
+        <label for="status" class="col-sm-4 col-form-label">Status:</label>
+    <div class="col-sm-7">
         {% if status == 'occupied' and reservation_id %}
-            <a href="{{ url_for('admin.view_occupied_spot', reservation_id=reservation_id) }}" class="form-control text-decoration-none">
+            <a href="{{ url_for('admin.view_occupied_spot', reservation_id=reservation_id) }}" class="form-control text-decoration-none btn btn-light border border-dark-subtle" >
                 {{ status }}
             </a>
         {% else %}
-            <input type="text" id="status" class="form-control" readonly value="{{ status }}">
+            <input type="text" id="status" class="form-control text-center" readonly value="{{ status }}">
         {% endif %}
         <div id="statuslink" class="form-text">Click on the status to know more.</div> 
     </div>

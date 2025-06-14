@@ -1,35 +1,78 @@
+<style>
+  .spot-btn {
+    height: 32px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border-radius: 0.5rem;
+    border: none;
+    transition: 0.2s ease;
+  }
+
+  .spot-btn.available {
+    background-color: #d2f8d2; /* soft pastel green */
+    color: #155724;
+  }
+
+  .spot-btn.occupied {
+    background-color: #fddde6; /* soft rose pink */
+    color: #721c24;
+  }
+
+  .spot-btn.available:hover {
+    background-color: #bdf2bd;
+  }
+
+  .spot-btn.occupied:hover {
+    background-color: #fac6d7;
+  }
+</style>
+
+
 {% extends "admin/base.html" %}
-{% block title %} ParkingLot{%endblock%}
-{% block heading %} Parking Lot{%endblock%}
-{% block content %} 
+{% block title %} ParkingLot{% endblock %}
+{% block heading %} Parking Lot{% endblock %}
+{% block content %}
 
-
-<!-- Main Section - Parking Lots Overview -->
+  <!-- Legend -->
+  <div class="mt-4 d-flex justify-content-center align-items-center gap-2">
+    <strong>Legend:</strong>
+    <span class="badge bg-success">A - Available</span>
+    <span class="badge bg-danger">O - Occupied</span>
+  </div>
+  <br>
 <div class="container">
   <div class="row">
     {% for lot in lots %}
     <div class="col-md-6 mb-4">
-      <div class="card">
-        <div class="card-header d-flex justify-content-between align-items-center">
-          <strong>Parking#{{ loop.index }}</strong>
-          <div>
-            <a href="{{ url_for('admin.update_lot', lot_id=lot.lot_id) }}" class="btn btn-sm btn-outline-primary">Edit</a>
-            <a href="{{ url_for('admin.delete_lot', lot_id=lot.lot_id) }}" class="btn btn-sm btn-outline-danger">Delete</a>
+      <div class="card shadow-sm border border-success">
+        <!-- Card Header -->
+        <div class="card-header py-2 border-bottom border-dark-subtle border-2">
+          <div class="d-flex justify-content-between align-items-start">
+            <div class="text-center w-100">
+              <h5 class="mb-1"><strong>Parking#{{ loop.index }}</strong></h5>
+              <p class="text-success mb-0" style="font-size: 0.9rem;">(Occupied: {{ lot.occupied_spots }}/{{ lot.total_no_spots }})</p>
+            </div>
+            <div class="position-absolute end-0 top-0 mt-2 me-3">
+              <a href="{{ url_for('admin.update_lot', lot_id=lot.lot_id) }}" class="text-primary me-2">Edit</a> |
+              <a href="{{ url_for('admin.delete_lot', lot_id=lot.lot_id) }}" class="text-primary">Delete</a>
+            </div>
           </div>
         </div>
-        <div class="card-body">
-          <p>Occupied: {{ lot.occupied_spots }}/{{ lot.total_no_spots }}</p>
-          <div class="row">
-                  {% for spot in lot.spots if spot.is_active %}
-                    <div class="col-2 mb-2">
-                      <a href="{{ url_for('admin.view_spot', spot_id=spot.spot_id) }}" 
-                        class="btn {% if spot.status == 'occupied' %}btn-danger{% else %}btn-success{% endif %} w-100" style="height: 40px;">
-                        {{ 'O' if spot.status == 'occupied' else 'A' }}
-                      </a>
-                    </div>
-                  {% endfor %}
-                </div>
 
+        <!-- Card Body with Spots -->
+        <div class="card-body pt-3 pb-2">
+          <div class="row gx-1 gy-1">
+            {% for spot in lot.spots if spot.is_active %}
+            <div class="col-2">
+              <a href="{{ url_for('admin.view_spot', spot_id=spot.spot_id) }}" 
+                class="w-100 btn spot-btn 
+                {% if spot.status == 'occupied' %}occupied{% else %}available{% endif %}">
+                {{ 'O' if spot.status == 'occupied' else 'A' }}
+              </a>
+
+            </div>
+            {% endfor %}
+          </div>
         </div>
       </div>
     </div>
@@ -37,18 +80,11 @@
   </div>
 
   <!-- Add Lot Button -->
-  <div class="text-center">
+  <div class="text-center mt-4">
     <a href="{{ url_for('admin.create_lot') }}" class="btn btn-outline-primary btn-lg">+ Add Lot</a>
   </div>
 
-  <!-- Color Legend -->
-  <div class="mt-4 d-flex justify-content-center align-items-center gap-2">
-  <strong>Legend:</strong>
-  <span class="badge bg-success">A - Available</span>
-  <span class="badge bg-danger">O - Occupied</span>
-</div>
+
 </div>
 
-
-
-{%endblock%}
+{% endblock %}

@@ -3,45 +3,44 @@
 {% block back %} {{ url_for('client.dashboard') }}{%endblock%}
 {% block heading %} Your Profile {% endblock %}
 {% block content %}
-<div class="container col-lg-8 mb-4 border border-secondary rounded-4 shadow-sm p-4 bg-light">
+
+<div class="container col-lg-10 mb-4 border border-secondary rounded-4 shadow-sm py-4 px-5 bg-light">
     <h5 class="text-center text-primary mb-4">Profile Details</h5>
     <form>
         <div class="row mb-3">
-            <label class="col-sm-4 col-form-label text-secondary">Email</label>
-            <div class="col-sm-8">
+            <label class="col-md-3 col-form-label text-secondary">&emsp;&emsp;Email</label>
+            <div class="col-md-8">
                 <input type="email" class="form-control border-primary text-center" value="{{ user.email }}" readonly>
             </div>
         </div>
         <div class="row mb-3">
-            <label class="col-sm-4 col-form-label text-secondary">Full Name</label>
-            <div class="col-sm-8">
+            <label class="col-md-3 col-form-label text-secondary">&emsp;&emsp;Full Name</label>
+            <div class="col-md-8">
                 <input type="text" class="form-control border-primary text-center" value="{{ user.name }}" readonly>
             </div>
         </div>
         <div class="row mb-3">
-            <label class="col-sm-4 col-form-label text-secondary">Address</label>
-            <div class="col-sm-8">
+            <label class="col-md-3 col-form-label text-secondary">&emsp;&emsp;Address</label>
+            <div class="col-md-8">
                 <input type="text" class="form-control border-primary text-center" value="{{ user.address }}" readonly>
             </div>
         </div>
         <div class="row mb-3">
-            <label class="col-sm-4 col-form-label text-secondary">Pin Code</label>
-            <div class="col-sm-8">
+            <label class="col-md-3 col-form-label text-secondary">&emsp;&emsp;Pin Code</label>
+            <div class="col-md-8">
                 <input type="text" class="form-control border-primary text-center" value="{{ user.pincode }}" readonly>
             </div>
         </div>
         <div class="row mb-3">
-            <label class="col-sm-4 col-form-label text-secondary">Password</label>
-            <div class="col-sm-8">
+            <label class="col-md-3 col-form-label text-secondary">&emsp;&emsp;Password</label>
+            <div class="col-md-8">
                 <input type="text" class="form-control border-primary text-center" value="{{ user.password }}" readonly>
             </div>
         </div>
         <div class="text-center mt-4">
-            <a href="{{ url_for('client.update_profile') }}" class="btn btn-outline-success rounded-pill">Edit Profile</a>
+            <a href="{{ url_for('client.update_profile') }}" class="btn btn-outline-success rounded-pill px-4">Edit Profile</a>
         </div>
     </form>
 </div>
+
 {% endblock %}
-
-
-<!-- need a update password column  -->

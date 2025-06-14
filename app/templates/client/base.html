@@ -55,7 +55,7 @@
             background-color: #ffffff;
             border-radius: 20px;
             padding: 2rem;
-            max-width: 750px;
+            max-width: 1200px;
             margin: 0 auto;
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
         }
@@ -73,7 +73,7 @@
 
     <!-- Header Bar -->
     <div class="client-nav">
-        <img src="{{ url_for('static', filename='images/temp_img.png') }}" alt="Logo" class="client-logo">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="client-logo ms-2">
         <h3><b><u>{% block heading %}Page Title{% endblock %}</u></b></h3>
         <a href="{% block back %} url_for('client.dashboard') {%endblock%}" class="back-button">
             <i class="bi bi-arrow-left"></i> Back

@@ -121,7 +121,7 @@ def view_spot(spot_id):
 
     reservation_id = None
     if data.status == 'occupied':
-        res = reservation.query.filter_by(spot_id=spot_id).first()
+        res = reservation.query.filter_by(spot_id=spot_id, status='active').first()
         if res:
             reservation_id = res.reservation_id
 
@@ -140,7 +140,7 @@ def delete_spot(spot_id):
 
     if spot.status == 'occupied':
         flash("Can't delete an occupied spot", 'danger')
-        return redirect(url_for('admin.view_lots'))
+        return redirect(url_for('admin.view_spot', spot_id=spot_id))
         
     spot.is_active = False
     db.session.commit()
