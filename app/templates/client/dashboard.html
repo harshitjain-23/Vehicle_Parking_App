@@ -22,6 +22,26 @@
 </head>
 <body>
     
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="container mt-3">
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show d-flex align-items-center shadow-sm" role="alert">
+          <i class="bi {{ 
+            'bi-check-circle-fill text-success' if category == 'success' else 
+            'bi-exclamation-triangle-fill text-warning' if category == 'warning' else 
+            'bi-x-circle-fill text-danger' if category == 'danger' else 
+            'bi-info-circle-fill text-info' 
+          }}"></i>
+          <div class="ms-2">{{ message }}</div>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
 <div class="container my-5">
     <h2 class="text-center mb-5">👋 Hello {{ name }}! Welcome to <strong>HJ Parkings</strong></h2>
     <br>
@@ -86,7 +106,17 @@
 </div>
 
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
 
+<script>
+    setTimeout(function () {
+        let alerts = document.querySelectorAll('.alert');
+        alerts.forEach(alert => {
+            let bsAlert = bootstrap.Alert.getOrCreateInstance(alert);
+            bsAlert.close();
+        });
+    }, 5000); // dismiss after 5 seconds
+</script>
 
 </body>
 </html>

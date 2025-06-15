@@ -30,7 +30,7 @@
 
 {% extends "admin/base.html" %}
 {% block title %} ParkingLot{% endblock %}
-{% block heading %} Parking Lot{% endblock %}
+{% block heading %} Parking Lots{% endblock %}
 {% block content %}
 
   <!-- Legend -->
@@ -40,6 +40,7 @@
     <span class="badge bg-danger">O - Occupied</span>
   </div>
   <br>
+
 <div class="container">
   <div class="row">
     {% for lot in lots %}
@@ -49,12 +50,13 @@
         <div class="card-header py-2 border-bottom border-dark-subtle border-2">
           <div class="d-flex justify-content-between align-items-start">
             <div class="text-center w-100">
-              <h5 class="mb-1"><strong>Parking#{{ loop.index }}</strong></h5>
+              <h5 class="mb-1"><strong>Parking#{{ lot.lot_id }}</strong></h5>
               <p class="text-success mb-0" style="font-size: 0.9rem;">(Occupied: {{ lot.occupied_spots }}/{{ lot.total_no_spots }})</p>
             </div>
             <div class="position-absolute end-0 top-0 mt-2 me-3">
               <a href="{{ url_for('admin.update_lot', lot_id=lot.lot_id) }}" class="text-primary me-2">Edit</a> |
-              <a href="{{ url_for('admin.delete_lot', lot_id=lot.lot_id) }}" class="text-primary">Delete</a>
+              <a href="{{ url_for('admin.delete_lot', lot_id=lot.lot_id) }}" class="text-primary" 
+              onclick="return confirm('Are you sure you want to delete this lot? This action cannot be undone!')">Delete</a>
             </div>
           </div>
         </div>
@@ -86,5 +88,36 @@
 
 
 </div>
+<br>
+<hr>
+
+
+<div class="container">
+  <h3 class="text-danger my-5 text-center"><u>Deleted Lots</u></h3>
+  <div class="row">
+    {% for lot in old_lots %}
+    <div class="col-md-6 mb-4">
+      <div class="card shadow-sm border border-success">
+        <!-- Card Header -->
+        <div class="card-header py-2 border-bottom border-dark-subtle border-2">
+          <div class="d-flex justify-content-between align-items-start">
+            <div class="text-left w-100">
+              <h5 class="mb-1"><strong>Parking#{{ lot.lot_id }}</strong></h5>
+              <p class="text-success mb-0" style="font-size: 0.9rem;">(Address: {{ lot.address }}, {{ lot.pin_code }})</p>
+            </div>
+            <div class="position-absolute end-0 top-2 mt-2 me-3">
+              <a href="{{ url_for('admin.reopen_lot', lot_id=lot.lot_id) }}" class="btn btn-outline-primary btn-lg btn-sm">Re-opening</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+
+</div>
+
 
 {% endblock %}

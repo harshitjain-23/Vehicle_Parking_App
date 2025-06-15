@@ -23,8 +23,25 @@ def admin_required(f):
 def view_lots():
 
     lots = parking_lot.query.filter_by(status='active').all()
-    return render_template('admin/admin_dash.html', lots=lots)
+    old_lots = parking_lot.query.filter_by(status='deleted').all()
+    return render_template('admin/admin_dash.html', lots=lots, old_lots=old_lots)
 
+@admin_bp.route('/reopen_lot/<int:lot_id>')
+@admin_required
+def reopen_lot(lot_id):
+    
+    data = parking_lot.query.get(lot_id)
+    if data:
+        if data.status == 'deleted':
+            data.status = 'active'
+            for spot in data.spots:
+                spot.is_active = True
+            db.session.commit()
+        else:
+            flash('Parking Lot already present', 'warning')
+            return redirect(url_for('admin.view_lots'))
+    
+    return redirect(url_for('admin.view_lots'))
 
 
 # code to add new parking location
@@ -102,7 +119,10 @@ def delete_lot(lot_id):
         if spot.status != 'available':
             flash("Cannot delete: Some spots are occupied.", "warning")
             return redirect(url_for('admin.view_lots'))
-    
+    else:
+        for spot in lot.spots:
+            spot.is_active = False
+
     lot.status = 'deleted'
     db.session.commit()
     flash('Parking lot has been successfully deleted.', 'success')

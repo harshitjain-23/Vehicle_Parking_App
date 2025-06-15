@@ -30,7 +30,8 @@ View/Delete Parking Spot
 </div>
 
 <div class="container-fluid">
-       <a href="{{ url_for('admin.delete_spot', spot_id=spot_id) }}" class="btn rounded-1" style="background-color: #d5f4e6; border: 2px solid #2d6a70; color: black; margin-right: 35px;"> Delete </a>
+       <a href="{{ url_for('admin.delete_spot', spot_id=spot_id) }}" class="btn rounded-1" style="background-color: #d5f4e6; border: 2px solid #2d6a70; color: black; margin-right: 35px;"
+       onclick="return confirm('Delete this spot permanently?')"> Delete </a>
         <a href="{{ url_for( 'admin.view_lots') }}" class="btn  rounded-1" style="background-color: #d5f4e6; border: 2px solid#2d6a70; color: black"> Close </a>
 </div> 
 

@@ -37,15 +37,42 @@
     </div>
 
     <main>
-        {% with messages = get_flashed_messages(with_categories = True) %}
-            {% for category, message in messages %}
-                <div class="flash {{category}}"> {{message}} </div>
-            {% endfor %}
-        {% endwith%}
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="container mt-3">
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show d-flex align-items-center shadow-sm" role="alert">
+          <i class="bi {{ 
+            'bi-check-circle-fill text-success' if category == 'success' else 
+            'bi-exclamation-triangle-fill text-warning' if category == 'warning' else 
+            'bi-x-circle-fill text-danger' if category == 'danger' else 
+            'bi-info-circle-fill text-info' 
+          }}"></i>
+          <div class="ms-2">{{ message }}</div>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
         {% block content %} {%endblock%}
     </main>
 <br><hr><br> 
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
+
+<script>
+    setTimeout(function () {
+        let alerts = document.querySelectorAll('.alert');
+        alerts.forEach(alert => {
+            let bsAlert = bootstrap.Alert.getOrCreateInstance(alert);
+            bsAlert.close();
+        });
+    }, 5000); // dismiss after 5 seconds
+</script>
+
     <footer class="text-center">
         <p>All copyrights are reserved with 23f3001028(Harshit Jain) | 2025</p>
     </footer>
