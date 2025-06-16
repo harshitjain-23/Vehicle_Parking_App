@@ -219,6 +219,44 @@ def view_users():
 
 
 
+@admin_bp.route('/search', methods=['POST','GET'])
+@admin_required
+def search():
+    if request.method == 'POST':
+        category = request.form.get('category')
+        keyword = request.form.get('keyword').strip()
+
+        results = []
+        if category == 'parking_lots':
+            results = parking_lot.query.filter(
+                (parking_lot.location.contains(keyword)) | 
+                (parking_lot.pin_code.contains(keyword))
+            ).all()
+
+        elif category == 'clients':
+            results = client.query.filter(
+                (client.name.contains(keyword)) | 
+                (client.email.contains(keyword)) |
+                (client.pincode.contains(keyword))
+            ).all()
+
+        elif category == 'reservations':
+            results = reservation.query.filter(
+                (reservation.vehicle_no.contains(keyword)) |
+                (reservation.user_email.contains(keyword))
+            ).all()
+
+        elif category == 'parking_spots':
+            results = parking_spot.query.filter(
+                parking_spot.spot_id.like(f"%{keyword}%")
+            ).all()
+
+        return render_template('admin/search_results.html', results=results, category=category)
+
+    return render_template('admin/search.html')
+
+
+
 # temprary summary dashboard
 @admin_bp.route('/dashboard')
 @admin_required
