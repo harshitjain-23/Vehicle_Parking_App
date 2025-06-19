@@ -1,0 +1,89 @@
+{% extends 'admin/base.html' %}
+{% block title %} Admin Summary {% endblock %}
+{% block heading %} Admin Summary Dashboard {% endblock %}
+{% block content %}
+
+<div class="container">
+
+  <div class="row text-center mb-4">
+    <div class="col-md-4">
+      <div class="card p-3">
+        <h5>Total Active Lots</h5>
+        <p><strong>{{ total_lots }}</strong></p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card p-3">
+        <h5>Total Active Spots</h5>
+        <p><strong>{{ total_spots }}</strong></p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card p-3">
+        <h5>Occupancy Rate</h5>
+        <p><strong>{{ occupancy_rate }}%</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row text-center mb-4">
+    <div class="col-md-4">
+      <div class="card p-3">
+        <h5>Average Spot per Lot</h5>
+        <p><strong>{{ avg_spots_per_lot }}</strong></p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card p-3">
+        <h5>Average Parking Price</h5>
+        <p><strong>₹ {{ avg_price }}</strong></p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card p-3">
+        <h5>Total Revenue</h5>
+        <p><strong>₹ {{ total_revenue }}</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row text-center mb-4">
+    <div class="col-md-4">
+      <div class="card p-3">
+        <h5>Active Reservations</h5>
+        <p><strong>{{ current_active }}</strong></p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card p-3">
+        <h5>Total Reservations</h5>
+        <p><strong>{{ total_reservations }}</strong></p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card p-3">
+        <h5>Total Clients</h5>
+        <p><strong>{{ total_clients }}</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row text-center mb-4">
+    <div class="col-md-6">
+      <div class="card p-3">
+        <h5>Average Parking Duration</h5>
+        <p><strong>{{ avg_duration }} hrs</strong></p>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card p-3">
+        <h5>Avg Revenue per Client</h5>
+        <p><strong>₹ {{ avg_revenue }}</strong></p>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+{% endblock %}

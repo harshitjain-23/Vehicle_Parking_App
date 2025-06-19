@@ -4,6 +4,11 @@ from app.models import parking_lot, parking_spot, reservation, client
 from functools import wraps 
 # wraps used for decorator in user authentication
 from sqlalchemy import or_, cast, String
+import io
+import base64
+import matplotlib.pyplot as plt
+from sqlalchemy.sql import func
+
 
 admin_bp = Blueprint('admin', __name__)
 
@@ -283,14 +288,49 @@ def search():
 
 
 
-
-# temprary summary dashboard
-@admin_bp.route('/summary')
+@admin_bp.route('/admin-summary')
 @admin_required
-def dashboard_summary():
+def admin_summary():
+    # Base queries
     total_lots = parking_lot.query.filter_by(status='active').count()
-    total_spots = parking_spot.query.count()
-    occupied = parking_spot.query.filter_by(status='occupied').count()
-    users = client.query.count()
+    total_spots = parking_spot.query.filter_by(is_active=True).count()
+    avg_price = db.session.query(func.avg(parking_lot.price)).scalar() or 0
+    total_clients = client.query.count()
 
-    return render_template("admin/dashboard.html", lots=total_lots, spots=total_spots, occupied=occupied, users=users)
+    # Calculations
+    avg_spots_per_lot = total_spots // total_lots if total_lots else 0
+    total_reservations = reservation.query.count()
+    current_active_reservations = reservation.query.filter_by(status='active').count()
+
+    # Total revenue
+    total_revenue = db.session.query(func.sum(reservation.total_cost)).scalar() or 0
+
+    # Average revenue per client
+    avg_revenue_per_client = total_revenue / total_clients if total_clients else 0
+
+    # Average duration
+    completed_reservations = reservation.query.filter(reservation.leaving_time != None).all()
+    total_duration = 0
+    for r in completed_reservations:
+        duration = (r.leaving_time - r.parking_time).total_seconds() / 3600
+        total_duration += duration
+    avg_parking_duration = total_duration / len(completed_reservations) if completed_reservations else 0
+
+    # Occupancy rate
+    occupied_spots = parking_spot.query.filter_by(status='occupied', is_active=True).count()
+    occupancy_rate = (occupied_spots / total_spots) * 100 if total_spots else 0
+
+
+    return render_template('admin/summary.html',
+        total_lots=total_lots,
+        total_spots=total_spots,
+        avg_price=round(avg_price, 2),
+        avg_spots_per_lot= avg_spots_per_lot,
+        total_revenue=round(total_revenue, 2),
+        current_active=current_active_reservations,
+        total_reservations=total_reservations,
+        total_clients=total_clients,
+        avg_duration=round(avg_parking_duration, 2),
+        avg_revenue=round(avg_revenue_per_client, 2),
+        occupancy_rate=round(occupancy_rate, 2),
+    )
