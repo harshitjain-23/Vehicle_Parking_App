@@ -1,4 +1,62 @@
 {% extends "admin/base.html" %}
-{% block title %} Search{% endblock %}
-{% block heading %} Search Data {% endblock %}
-{% block content %} {% endblock %}
+{% block title %}Search{% endblock %}
+{% block heading %}Search{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+
+    <!-- Search Form -->
+    <form method="GET" action="{{ url_for('admin.search') }}" class="row g-3 align-items-center mb-4">
+
+        <div class="col-md-4">
+            <select name="category" class="form-select">
+                <option value="" disabled {% if not category %}selected{% endif %}>Choose Category</option>
+                <option value="lot" {% if category == 'lot' %}selected{% endif %}>Parking Lots</option>
+                <option value="client" {% if category == 'client' %}selected{% endif %}>Clients</option>
+                <option value="reservation" {% if category == 'reservation' %}selected{% endif %}>Reservations</option>
+                <option value="spot" {% if category == 'spot' %}selected{% endif %}>Parking Spots</option>
+            </select>
+        </div>
+
+        <div class="col-md-6">
+            <input type="text" name="query" class="form-control" placeholder="Enter search keyword..."
+                   value="{{ request.args.get('query', '') }}">
+        </div>
+
+        <div class="col-md-2 text-end">
+            <button type="submit" class="btn btn-primary w-100">Search</button>
+        </div>
+    </form>
+
+    <!-- Display Search Results If Available -->
+    {% if results and results|length > 0 %}
+        <h5 class="mb-3">Search Results:</h5>
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        {% for col in columns %}
+                            <th scope="col">{{ col }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in results %}
+                        <tr>
+                            {% for value in row %}
+                                <td>{{ value }}</td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% elif query and category %}
+        <!-- Show no result message if searched and nothing found -->
+        <div class="alert alert-warning mt-3" role="alert">
+            No results found for "<strong>{{ query }}</strong>" in "<strong>{{ category }}</strong>" category.
+        </div>
+    {% endif %}
+
+</div>
+{% endblock %}

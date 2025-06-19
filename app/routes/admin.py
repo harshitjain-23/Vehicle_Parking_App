@@ -219,46 +219,73 @@ def view_users():
 
 
 
-@admin_bp.route('/search', methods=['POST','GET'])
+# Admin Search Page
+@admin_bp.route('/search', methods=['GET'])
 @admin_required
 def search():
-    if request.method == 'POST':
-        category = request.form.get('category')
-        keyword = request.form.get('keyword').strip()
+    query = request.args.get('query', '').strip()
+    category = request.args.get('category', '').strip()
+    results = []
+    columns = []
 
-        results = []
-        if category == 'parking_lots':
-            results = parking_lot.query.filter(
-                (parking_lot.location.contains(keyword)) | 
-                (parking_lot.pin_code.contains(keyword))
+    if query and category:
+        if category == 'lot':
+            lots = parking_lot.query.filter(
+                (parking_lot.location.ilike(f'%{query}%')) |
+                (parking_lot.address.ilike(f'%{query}%')) |
+                (parking_lot.pin_code.ilike(f'%{query}%')) |
+                (parking_lot.status.ilike(f'%{query}%'))
             ).all()
+            columns = ['ID', 'Location', 'Address', 'Pincode', 'Status']
+            results = [
+                [lot.lot_id, lot.location, lot.address, lot.pin_code, lot.status]
+                for lot in lots
+            ]
 
-        elif category == 'clients':
-            results = client.query.filter(
-                (client.name.contains(keyword)) | 
-                (client.email.contains(keyword)) |
-                (client.pincode.contains(keyword))
+        elif category == 'client':
+            clients = client.query.filter(
+                (client.name.ilike(f'%{query}%')) |
+                (client.email.ilike(f'%{query}%')) |
+                (client.address.ilike(f'%{query}%')) |
+                (client.pincode.ilike(f'%{query}%'))
             ).all()
+            columns = ['Name', 'Email', 'Address', 'Pincode']
+            results = [
+                [c.name, c.email, c.address, c.pincode]
+                for c in clients
+            ]
 
-        elif category == 'reservations':
-            results = reservation.query.filter(
-                (reservation.vehicle_no.contains(keyword)) |
-                (reservation.user_email.contains(keyword))
+        elif category == 'reservation':
+            reservations = reservation.query.filter(
+                (reservation.vehicle_no.ilike(f'%{query}%')) |
+                (reservation.user_email.ilike(f'%{query}%')) |
+                (reservation.status.ilike(f'%{query}%'))
             ).all()
+            columns = ['ID', 'User Email', 'Vehicle No', 'Parking Time', 'Leaving Time', 'Status']
+            results = [
+                [r.reservation_id, r.user_email, r.vehicle_no, r.parking_time, r.leaving_time or '—', r.status]
+                for r in reservations
+            ]
 
-        elif category == 'parking_spots':
-            results = parking_spot.query.filter(
-                parking_spot.spot_id.like(f"%{keyword}%")
+        elif category == 'spot':
+            spots = parking_spot.query.filter(
+                (parking_spot.status.ilike(f'%{query}%')) |
+                (parking_spot.spot_id.cast(db.String).ilike(f'%{query}%')) |
+                (parking_spot.lot_id.cast(db.String).ilike(f'%{query}%'))
             ).all()
+            columns = ['Spot ID', 'Lot ID', 'Status', 'Active']
+            results = [
+                [s.spot_id, s.lot_id, s.status, 'Yes' if s.is_active else 'No']
+                for s in spots
+            ]
 
-        return render_template('admin/search_results.html', results=results, category=category)
+    return render_template('admin/search.html', results=results, columns=columns, query=query, category=category)
 
-    return render_template('admin/search.html')
 
 
 
 # temprary summary dashboard
-@admin_bp.route('/dashboard')
+@admin_bp.route('/summary')
 @admin_required
 def dashboard_summary():
     total_lots = parking_lot.query.filter_by(status='active').count()
