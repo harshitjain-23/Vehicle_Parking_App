@@ -159,3 +159,37 @@ def release(reservation_id):
         return redirect(url_for('client.reservations'))
 
     return render_template( 'client/release.html', reservation_id=reservation_id, lot_id=reserve.lot_id, spot_id=reserve.spot_id, vehicle_no=reserve.vehicle_no, parking_time=reserve.parking_time, leaving_time=leave, total_cost=cost )
+
+
+
+@client_bp.route('/user-summary')
+@user_authentication
+def user_summary():
+    user_email = session.get('user')
+
+    # Fetch all reservations of the current user
+    all_reservations = reservation.query.filter_by(user_email=user_email).all()
+    total_reservations = len(all_reservations)
+    active_reservations = len([r for r in all_reservations if r.status == 'active'])
+
+    total_duration = 0
+    total_cost = 0
+    completed = 0
+
+    for r in all_reservations:
+        if r.leaving_time:
+            duration = (r.leaving_time - r.parking_time).total_seconds() / 3600
+            total_duration += duration
+            total_cost += r.total_cost
+            completed += 1
+
+    avg_duration = round(total_duration / completed, 2) if completed else 0
+    avg_spent = round(total_cost / total_reservations, 2) if total_reservations else 0
+
+    return render_template('client/user_summary.html',
+        total=total_reservations,
+        active=active_reservations,
+        avg_duration=avg_duration,
+        avg_spent=avg_spent,
+        total_cost=total_cost
+    )

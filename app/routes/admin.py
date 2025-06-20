@@ -316,10 +316,6 @@ def admin_summary():
         total_duration += duration
     avg_parking_duration = total_duration / len(completed_reservations) if completed_reservations else 0
 
-    # Occupancy rate
-    occupied_spots = parking_spot.query.filter_by(status='occupied', is_active=True).count()
-    occupancy_rate = (occupied_spots / total_spots) * 100 if total_spots else 0
-
 
     return render_template('admin/summary.html',
         total_lots=total_lots,
@@ -332,5 +328,4 @@ def admin_summary():
         total_clients=total_clients,
         avg_duration=round(avg_parking_duration, 2),
         avg_revenue=round(avg_revenue_per_client, 2),
-        occupancy_rate=round(occupancy_rate, 2),
     )

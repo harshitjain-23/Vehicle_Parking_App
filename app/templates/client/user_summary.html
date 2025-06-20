@@ -1,0 +1,51 @@
+{% extends 'client/base.html' %}
+{% block title %} My Summary {% endblock %}
+{% block back %} {{ url_for('client.dashboard') }}{%endblock%}
+{% block heading %} User Summary Dashboard {% endblock %}
+{% block content %}
+
+<div class="container">
+
+  <div class="row text-center mb-4">
+    <div class="col-md-6">
+      <div class="card p-3 shadow-sm">
+        <h5>Total Reservations</h5>
+        <p><strong>{{ total }}</strong></p>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card p-3 shadow-sm">
+        <h5>Active Reservations</h5>
+        <p><strong>{{ active }}</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row text-center mb-4">
+    <div class="col-md-6">
+      <div class="card p-3 shadow-sm">
+        <h5>Average Parking Duration</h5>
+        <p><strong>{{ avg_duration }} hrs</strong></p>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card p-3 shadow-sm">
+        <h5>Average Money Spent</h5>
+        <p><strong>₹ {{ avg_spent }}</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row text-center mb-4">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+      <div class="card p-3 shadow-sm">
+        <h5>Total Revenue Paid</h5>
+        <p><strong>₹ {{ total_cost }}</strong></p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}
