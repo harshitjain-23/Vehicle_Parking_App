@@ -1,24 +1,25 @@
 # 🚗 Vehicle Parking Management System
 
 A full-stack web-based Parking Management System designed to streamline the parking process for users and administrators. This system allows users to book and release parking spots, while admins can manage lots, monitor usage, and analyze statistics with a clean UI, efficient workflows, and smart automation. Built using **Flask**, **SQLite**, and **Bootstrap**, it includes separate dashboards for **Admins** and **Clients**
-<br>
+
 ---
-<br>
+
 ## 👨‍💻 Author
-**Name:** Harshit Jain  <br>
-**Email:** jainharshit2305@gmail.com<br>
+
+**Name:** Harshit Jain  
+**Email:** jainharshit2305@gmail.com <br>
 **LinkedIn**: linkedin.com/in/harshit2305
-<br>
+
 ---
-<br>
+
 ## 📝 Description
 
 This project simulates a real-time vehicle parking platform that allows:
 - Clients to register, log in, book and release parking slots.
 - Admins to manage parking lots and users, and monitor system performance using analytical summaries.
-<br>
+
 ---
-<br>
+
 ## 🛠 Tech Stack
 
 | Layer           | Technology                  |
@@ -28,9 +29,9 @@ This project simulates a real-time vehicle parking platform that allows:
 | Database        | SQLite                      |
 | Template Engine | Jinja2                      |
 | Session/Auth    | Flask Sessions              |
-<br>
+
 ---
-<br>
+
 ## 🛠️ Features
 
 ### 🔐 Authentication
@@ -52,9 +53,9 @@ This project simulates a real-time vehicle parking platform that allows:
 - View current and past reservations
 - Release spot & see cost based on time
 - View history and analytics summary
-<br>
+
 ---
-<br>
+
 ## 🖼 UI Highlights
 
 - 🎨 Minimalist and elegant UI using Bootstrap 5
@@ -62,28 +63,28 @@ This project simulates a real-time vehicle parking platform that allows:
 - 📱 Mobile Responsive Layout
 - 🧾 Table-based listings for reservations, users, and lots
 - ✍️ Auto-filled forms using session data
-<br>
+
 ---
-<br>
+
 ## 🗂️ Project Structure
-<br>
-Vehicle_Parking_App/<br>
-│<br>
+
+Vehicle_Parking_App/ <br>
+│ <br>
 ├── app/<br>
 │ ├── models/ <br>
 │ ├── routes/ <br>
 │ ├── templates/ <br>
 │ ├── static/ <br>
 │ └── init.py <br>
-│<br>
+│ <br>
 ├── run.py <br>
 └── README.md <br>
 
-<br>
+
 ---
-<br>
+
 ## 🧠 Database Schema Overview
-<br>
+
 ### `client`
 - email (PK), name, address, pincode, password
 
@@ -96,17 +97,17 @@ Vehicle_Parking_App/<br>
 ### `reservation`
 - reservation_id (PK), lot_id (FK), spot_id (FK), user_email (FK)
 - vehicle_no, parking_time, leaving_time, total_cost, status
-<br>
+
 ---
 
-<br>
+
 ## 📊 Summary Dashboards
-<br>
+
 - **Admin Summary**: All system-wide statistics
 - **User Summary**: Personalized booking analytics
-<br>
+
 ---
-<br>
+
 ## 📎 How to Run the App
 
 ```bash
@@ -129,13 +130,13 @@ python run.py
 # Step 3: Open in browser
 http://127.0.0.1:5000
 
-<br>
----
-<br>
+```
 
 ## ❤️ Acknowledgements
 Made with passion, purpose, and plenty of Python. <br>
 This project reflects the challenges of real-world parking systems and aims to simplify them for users and admins alike.
+
+---
 
 ## 🌟 Don't forget to Star the Repo!
 If you found this project helpful or inspiring, please consider giving it a ⭐ on GitHub!
