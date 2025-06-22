@@ -291,24 +291,19 @@ def search():
 @admin_bp.route('/admin-summary')
 @admin_required
 def admin_summary():
-    # Base queries
     total_lots = parking_lot.query.filter_by(status='active').count()
     total_spots = parking_spot.query.filter_by(is_active=True).count()
     avg_price = db.session.query(func.avg(parking_lot.price)).scalar() or 0
     total_clients = client.query.count()
 
-    # Calculations
     avg_spots_per_lot = total_spots // total_lots if total_lots else 0
     total_reservations = reservation.query.count()
     current_active_reservations = reservation.query.filter_by(status='active').count()
 
-    # Total revenue
     total_revenue = db.session.query(func.sum(reservation.total_cost)).scalar() or 0
 
-    # Average revenue per client
     avg_revenue_per_client = total_revenue / total_clients if total_clients else 0
 
-    # Average duration
     completed_reservations = reservation.query.filter(reservation.leaving_time != None).all()
     total_duration = 0
     for r in completed_reservations:
