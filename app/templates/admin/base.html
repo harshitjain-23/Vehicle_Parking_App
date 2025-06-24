@@ -22,11 +22,10 @@
         <li class="nav-item"><a class="nav-link text-black" href="{{ url_for('admin.view_users') }}">Users</a></li>
         <li class="nav-item"><a class="nav-link text-black" href="{{ url_for('admin.search') }}">Search</a></li>
         <li class="nav-item"><a class="nav-link text-black" href="{{ url_for('admin.admin_summary') }}">Summary</a></li>
-        <li class="nav-item"><a class="nav-link text-black" href="{{ url_for('auth.adminlogout') }}">Logout</a></li>
       </ul>
     </div>
 
-    <a class="btn btn-outline-dark" href="{{ url_for('admin.view_lots') }}">Edit Profile</a>
+    <a class="btn btn-outline-dark" href="{{ url_for('auth.adminlogout') }}">Logout</a>
   </div>
 </nav>
 

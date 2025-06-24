@@ -16,6 +16,10 @@
             <input type="password" id="password" name="password" class="form-control" placeholder="Enter password">
         </div>
         <input type="submit" value="Login" class="btn btn-dark w-100">
+        <div class="text-center">
+            <br>
+            <a href="{{ url_for('auth.login') }}" style="color: black;">Login as User</a>
+        </div>
     </form>
 </div>
 {% endblock %}

@@ -1,8 +1,7 @@
 from flask import Blueprint, redirect, render_template, request, flash, session, url_for
 from app import db
 from app.models import parking_lot, parking_spot, reservation, client
-from functools import wraps 
-# wraps used for decorator in user authentication
+from functools import wraps  # wraps used for decorator in user authentication
 from sqlalchemy import or_, cast, String
 import io
 import base64
@@ -287,7 +286,7 @@ def search():
     return render_template('admin/search.html', results=results, columns=columns, query=query, category=category)
 
 
-
+# Admin Summary Page
 @admin_bp.route('/admin-summary')
 @admin_required
 def admin_summary():
