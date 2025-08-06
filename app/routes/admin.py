@@ -92,6 +92,7 @@ def update_lot(lot_id):
     data = parking_lot.query.filter_by(lot_id=lot_id).first()
 
     if not data:
+
         flash("Lot not found.", "danger")
         return redirect(url_for('admin.view_lots'))
 
@@ -121,6 +122,7 @@ def delete_lot(lot_id):
 
     for spot in lot.spots:
         if spot.status != 'available':
+            
             flash("Cannot delete: Some spots are occupied.", "warning")
             return redirect(url_for('admin.view_lots'))
     else:
